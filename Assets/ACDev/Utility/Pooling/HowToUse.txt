@@ -1,7 +1,0 @@
-1. Create a new class that inherits from GenericObjectPool
-	Ex. public class ShotPool : GenericObjectPool<BlasterShotGenericPooled> 
-	{ 
-	}
-2. Add new Pool class to a GameObject
-3. Specify a prefab for this Pool class to pool
-4. Wherever you want -> Access pool class and get/return objects as needed!

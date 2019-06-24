@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using ACDev.Audio;
 
-namespace ACDev.Audio.Sample
+namespace ACDev.Samples
 {
-    public class Tests : MonoBehaviour
+    public class AudioTests : MonoBehaviour
     {
         [SerializeField] SoundEvent _explode = null;
         [SerializeField] AudioClip _music1 = null;

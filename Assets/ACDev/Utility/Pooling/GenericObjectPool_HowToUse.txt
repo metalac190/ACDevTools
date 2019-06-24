@@ -1,0 +1,13 @@
+
+1. Create a new class that inherits from GenericObjectPool
+	- This will be the Pooler class that keeps track of the pool objects
+	Ex. public class ShotPool : GenericObjectPool<BlasterShot> 
+	{ 
+	}
+
+2. Add this Pooler class to a GameObject. This GameObject will now be in charge of the pool
+
+3. Specify a prefab for this Pool class to pool
+	- This prefab must have a component of the Type specified in the Pooler Class
+
+4. Wherever you want -> Access Pooler class and get/return objects as needed!
