@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioPool : MonoBehaviour
 {
-    [SerializeField] AudioSource _poolSource;
+    [SerializeField] AudioSource _poolSource = null;
     [SerializeField] int _initialPoolSize = 5;
     private Queue<AudioSource> sourcePool = new Queue<AudioSource>();
 

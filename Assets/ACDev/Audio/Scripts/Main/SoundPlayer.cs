@@ -6,8 +6,8 @@ namespace ACDev.Audio
 {
     public class SoundPlayer : MonoBehaviour
     {
-        [SerializeField] AudioPool _sound2DPool;
-        [SerializeField] AudioPool _sound3DPool;
+        [SerializeField] AudioPool _sound2DPool = null;
+        [SerializeField] AudioPool _sound3DPool = null;
 
         #region Play Sounds
         public void PlaySound2D(AudioClip clip, float volume)
@@ -29,7 +29,7 @@ namespace ACDev.Audio
 
             ActivatePooledSound2D(newSource);
         }
-        public void PlaySound2D(SoundEvent2D sound2D)
+        public void PlaySound2D(SoundEvent sound2D)
         {
             AudioSource newSource = _sound2DPool.Get();
             // setup
@@ -49,7 +49,7 @@ namespace ACDev.Audio
 
             ActivatePooledSound3D(newSource, position);
         }
-        public void PlaySound3D(SoundEvent3D sound3D, Vector3 position)
+        public void PlaySound3D(SoundEvent sound3D, Vector3 position)
         {
             AudioSource newSource = _sound2DPool.Get();
             // setup

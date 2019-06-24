@@ -323,8 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3361f01d01c98349ac1cf9b61cc61b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explode: {fileID: 11400000, guid: c5b64d84982a65f489e74d0c06b4b78c, type: 2}
-  _explode3D: {fileID: 11400000, guid: 8d6d9296b37b7ee42a9d442920d1814a, type: 2}
+  _explode: {fileID: 11400000, guid: 1fcb2a39e52df3f4fb0d609995e2cb59, type: 2}
   _music1: {fileID: 8300000, guid: 3e0c8d20f2ab32c4fa8b468264e87947, type: 3}
   _music2: {fileID: 8300000, guid: d4da3a79947c782499b7836a39e8e426, type: 3}
 --- !u!4 &1300859419

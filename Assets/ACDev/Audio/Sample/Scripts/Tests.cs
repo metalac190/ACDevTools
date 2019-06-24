@@ -5,20 +5,19 @@ namespace ACDev.Audio.Sample
 {
     public class Tests : MonoBehaviour
     {
-        [SerializeField] SoundEvent2D _explode;
-        [SerializeField] SoundEvent3D _explode3D;
-        [SerializeField] AudioClip _music1;
-        [SerializeField] AudioClip _music2;
+        [SerializeField] SoundEvent _explode = null;
+        [SerializeField] AudioClip _music1 = null;
+        [SerializeField] AudioClip _music2 = null;
 
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _explode.Play();
+                _explode.Play2D();
             }
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                _explode3D.Play(new Vector3(0, 0, 0));
+                _explode.Play3D(new Vector3(0, 0, 0));
             }
             if (Input.GetKeyDown(KeyCode.W))
             {

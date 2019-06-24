@@ -49,14 +49,20 @@ namespace ACDev.Audio
 
         public void PlayMusic(AudioClip musicClip)
         {
+            if(musicClip == null) { return; }
+
             _musicPlayer.PlayMusic(musicClip);
         }
         public void PlayMusicWithFade(AudioClip musicClip, float transitionDuration = 2.5f)
         {
+            if(musicClip == null) { return; }
+
             _musicPlayer.PlayMusicWithFade(musicClip, transitionDuration);
         }
         public void PlayMusicWithCrossFade(AudioClip musicClip, float transitionDuration = 2.5f)
         {
+            if(musicClip == null) { return; }
+
             _musicPlayer.PlayMusicWithCrossFade(musicClip, transitionDuration);
         }
         #endregion
@@ -64,24 +70,34 @@ namespace ACDev.Audio
         #region Sounds
         public void PlaySound2D(AudioClip clip, float volume)
         {
+            if(clip == null) { return; }
+
             _soundPlayer.PlaySound2D(clip, volume);
         }
         public void PlaySound2D(AudioClip clip, float volume, float pitch)
         {
+            if(clip == null) { return; }
+
             _soundPlayer.PlaySound2D(clip, volume, pitch);
         }
-        public void PlaySound2D(SoundEvent2D sound2D)
+        public void PlaySound2D(SoundEvent sound)
         {
-            _soundPlayer.PlaySound2D(sound2D);
+            if(sound == null) { return; }
+
+            _soundPlayer.PlaySound2D(sound);
         }
 
         public void PlaySound3D(AudioClip clip, float volume, Vector3 position)
         {
+            if(clip == null) { return; }
+
             _soundPlayer.PlaySound3D(clip, volume, position);
         }
-        public void PlaySound3D(SoundEvent3D sound3D, Vector3 position)
+        public void PlaySound3D(SoundEvent sound, Vector3 position)
         {
-            _soundPlayer.PlaySound3D(sound3D, position);
+            if(sound == null) { return; }
+
+            _soundPlayer.PlaySound3D(sound, position);
         }
         #endregion
     }

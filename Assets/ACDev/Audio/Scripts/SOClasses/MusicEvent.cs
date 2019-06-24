@@ -8,7 +8,7 @@ namespace ACDev.Audio
     public class MusicEvent : ScriptableObject
     {
         [Header("Base Settings")]
-        [SerializeField] AudioClip _musicClip;
+        [SerializeField] AudioClip _musicClip = null;
         [SerializeField] bool _crossFade = false;
         [SerializeField] float _fadeTime = 0;
 

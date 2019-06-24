@@ -7,8 +7,8 @@ namespace ACDev.Audio
     public class MusicPlayer : MonoBehaviour
     {
         // use 2 music sources so that we can do cross blending
-        [SerializeField] AudioSource _musicSource1;
-        [SerializeField] AudioSource _musicSource2;
+        [SerializeField] AudioSource _musicSource1 = null;
+        [SerializeField] AudioSource _musicSource2 = null;
 
         private bool _music1SourcePlaying = false;
         [SerializeField] float _currentMusicVolume = 1;

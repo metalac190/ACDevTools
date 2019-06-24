@@ -4,21 +4,22 @@ using UnityEngine;
 
 namespace ACDev.Audio
 {
-    [CreateAssetMenu(menuName = "ACDev/Audio/SoundEvent3D", fileName = "NewSoundEvent3D")]
-    public class SoundEvent3D : ScriptableObject
+    [CreateAssetMenu(menuName = "ACDev/Audio/SoundEvent", fileName = "NewSoundEvent")]
+    public class SoundEvent : ScriptableObject
     {
         [Header("Base Settings")]
-        [SerializeField] AudioClip[] _clipVariations;
-        public AudioClip Clip { get; private set; }
+        [SerializeField] AudioClip[] _clipVariations = new AudioClip[0];
         [Range(0, 1)]
         [SerializeField] float _minVolume = 1f;
         [Range(0, 1)]
         [SerializeField] float _maxVolume = 1f;
-        public float Volume { get; private set; }
         [Range(.5f, 1.5f)]
         [SerializeField] float _minPitch = 1f;
         [Range(.5f, 1.5f)]
         [SerializeField] float _maxPitch = 1f;
+
+        public AudioClip Clip { get; private set; }
+        public float Volume { get; private set; }
         public float Pitch { get; private set; }
 
         [Header("3D Settings")]
@@ -35,10 +36,10 @@ namespace ACDev.Audio
         [SerializeField] float _maxAttenuation = 500;
         public float MaxAttenuation
         {
-            get { return _minAttenuation; }
+            get { return _maxAttenuation; }
             private set
             {
-                if(value < MinAttenuation)
+                if (value < MinAttenuation)
                 {
                     value = MinAttenuation;
                 }
@@ -46,15 +47,27 @@ namespace ACDev.Audio
             }
         }
 
-        public void Play(Vector3 position)
+        public void Play2D()
         {
             if (_clipVariations.Length == 0) return;
 
+            SetVariationValues();
+            AudioManager.Instance.PlaySound2D(this);
+        }
+
+        public void Play3D(Vector3 position)
+        {
+            if (_clipVariations.Length == 0) return;
+
+            SetVariationValues();
+            AudioManager.Instance.PlaySound3D(this, position);
+        }
+
+        private void SetVariationValues()
+        {
             Clip = _clipVariations[Random.Range(0, _clipVariations.Length)];
             Volume = Random.Range(_minVolume, _maxVolume);
             Pitch = Random.Range(_minPitch, _maxPitch);
-
-            AudioManager.Instance.PlaySound3D(this, position);
         }
     }
 }

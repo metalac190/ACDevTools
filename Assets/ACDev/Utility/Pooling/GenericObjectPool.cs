@@ -6,7 +6,7 @@ namespace ACDev.Utility
 {
     public abstract class GenericObjectPool<T> : MonoBehaviour where T : Component
     {
-        [SerializeField] private T _prefab;
+        [SerializeField] private T _prefab = null;
 
         public static GenericObjectPool<T> Instance { get; private set; }
         private Queue<T> objects = new Queue<T>();
