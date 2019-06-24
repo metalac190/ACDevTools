@@ -5,7 +5,7 @@ _____________________________________________________________________________
 Direct Control
 --------------------------------------------------------------------------------------------------------
 You can play a sound by calling it through the AudioManager singleton GameObject. This is useful if you
-want to make simple, direct calls to sounds
+want to make simple, direct calls to play Sounds
 --------------------------------------------------------------------------------------------------------
 1. Place the AudioManager prefab in your scene 
 	(it uses Singleton pattern and will remain persistent)
@@ -18,12 +18,12 @@ Scriptable Objects
 Optionally, you can setup SoundEvent Data as an asset file, then just call the files through code.
 This is useful if you don't want the Sound Designer to mess with code, but they still want to tweak values
 --------------------------------------------------------------------------------------------------------
-1. Create a new SoundEvent2D or SoundEvent3D
-	(rightClick Project view, Create -> ACDev -> Audio -> SoundEvent2D/3D)
+1. Create a new SoundEvent
+	(rightClick Project view, Create -> ACDev -> Audio -> SoundEvent)
 2. Reference the Asset through script, and drag/drop the SoundEvent asset file into the slot
 3. Call the Play event on the sound events
-	soundEvent2D.Play()
-	soundEvent3D.Play(positionToPlayAt)
+	soundEvent.Play()
+	soundEvent.Play(positionToPlayAt)
 _____________________________________________________________________________
 IMPORTANT FUNCTIONS
 
@@ -40,5 +40,5 @@ AudioManager.Instance.PlaySound3D(clip, volume, position)
 AudioManager.Instance.PlaySound3D(soundEvent3D, position)
 
 Scriptable Objects
-SoundEvent2D.Play()
-SoundEvent3D.Play(position)
+SoundEvent.Play()
+SoundEvent.Play(position)
