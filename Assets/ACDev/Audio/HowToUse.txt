@@ -1,0 +1,44 @@
+This asset bundle uses Singletons, Scriptable Objects, and Object Pooling to quickly and easily play sounds.
+Primary focus is on ease of use and separation of designer control.
+Created by: Adam Chandler
+_____________________________________________________________________________
+Direct Control
+--------------------------------------------------------------------------------------------------------
+You can play a sound by calling it through the AudioManager singleton GameObject. This is useful if you
+want to make simple, direct calls to sounds
+--------------------------------------------------------------------------------------------------------
+1. Place the AudioManager prefab in your scene 
+	(it uses Singleton pattern and will remain persistent)
+2. Access AudioManager through code to play sounds
+	Ex. AudioManager.Instance.PlaySound2D(clip,volume)
+	- AudioManager uses pooling for sounds, so AudioSources are automatically handled/disposed
+_____________________________________________________________________________
+Scriptable Objects
+--------------------------------------------------------------------------------------------------------
+Optionally, you can setup SoundEvent Data as an asset file, then just call the files through code.
+This is useful if you don't want the Sound Designer to mess with code, but they still want to tweak values
+--------------------------------------------------------------------------------------------------------
+1. Create a new SoundEvent2D or SoundEvent3D
+	(rightClick Project view, Create -> ACDev -> Audio -> SoundEvent2D/3D)
+2. Reference the Asset through script, and drag/drop the SoundEvent asset file into the slot
+3. Call the Play event on the sound events
+	soundEvent2D.Play()
+	soundEvent3D.Play(positionToPlayAt)
+_____________________________________________________________________________
+IMPORTANT FUNCTIONS
+
+Music
+AudioManager.Instance.SetMusicVolume(newVolume, blendDuration)
+AudioManager.Instance.PlayMusic(musicClip)
+AudioManager.Instance.PlayMusicWithFade(musicClip, fadeDuration)
+AudioManager.Instance.PlayMusicWithCrossFade(musicClip, crossFadeDuration)
+
+Sound
+AudioManager.Instance.PlaySound2D(clip, volume, pitch)
+AudioManager.Instance.PlaySound2D(soundEvent2D)
+AudioManager.Instance.PlaySound3D(clip, volume, position)
+AudioManager.Instance.PlaySound3D(soundEvent3D, position)
+
+Scriptable Objects
+SoundEvent2D.Play()
+SoundEvent3D.Play(position)
