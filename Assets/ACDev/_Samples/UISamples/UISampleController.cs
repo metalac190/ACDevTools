@@ -9,9 +9,12 @@ namespace ACDev.Samples
 {
     public class UISampleController : MonoBehaviour
     {
-        [SerializeField] FlashImage _flashImage;
-        [SerializeField] TextMeshProUGUI _countText;
-        [SerializeField] Slider _timeSlider;
+        [SerializeField] FlashImage _flashImage = null;
+        [SerializeField] TextMeshProUGUI _countText = null;
+        [SerializeField] Slider _timeSlider = null;
+
+        Coroutine _countRoutine = null;
+        Coroutine _sliderRoutine = null;
 
         void Update()
         {
@@ -32,19 +35,35 @@ namespace ACDev.Samples
             // Timers
             if (Input.GetKeyDown(KeyCode.A))
             {
-                StartCoroutine(UITimer.CountDownTime(_countText, .1f, 5));
+                if(_countRoutine != null)
+                {
+                    StopCoroutine(_countRoutine);
+                }
+                _countRoutine = StartCoroutine(UITimer.CountDownTime(_countText, .1f, 5));
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
-                StartCoroutine(UITimer.CountElapsedTime(_countText, .1f, 5));
+                if(_countRoutine != null)
+                {
+                    StopCoroutine(_countRoutine);
+                }
+                _countRoutine = StartCoroutine(UITimer.CountElapsedTime(_countText, .1f, 5));
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
-                StartCoroutine(UITimer.CountDownSlider(_timeSlider, 3));
+                if(_sliderRoutine != null)
+                {
+                    StopCoroutine(_sliderRoutine);
+                }
+                _sliderRoutine = StartCoroutine(UITimer.CountDownSlider(_timeSlider, 3));
             }
             if (Input.GetKeyDown(KeyCode.F))
             {
-                StartCoroutine(UITimer.CountUpSlider(_timeSlider, 3));
+                if (_sliderRoutine != null)
+                {
+                    StopCoroutine(_sliderRoutine);
+                }
+                _sliderRoutine = StartCoroutine(UITimer.CountUpSlider(_timeSlider, 3));
             }
         }
     }
