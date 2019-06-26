@@ -9,7 +9,7 @@ using UnityEngine;
 /// Make sure to clean up your objects before sending them back to the pool. This script
 /// does not return object default settings: that is left to the user.
 /// </summary>
-namespace ACDev.Pooling
+namespace ACDev.Systems
 {
     public abstract class GenericObjectPool<T> : MonoBehaviour where T : Component
     {

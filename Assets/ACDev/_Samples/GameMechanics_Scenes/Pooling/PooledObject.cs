@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ACDev.Samples
 {
-    public class SampleCube : MonoBehaviour
+    public class PooledObject : MonoBehaviour
     {
 
     }

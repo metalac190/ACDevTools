@@ -7,9 +7,9 @@ namespace ACDev.Samples
 {
     public class PoolingController : MonoBehaviour
     {
-        [SerializeField] CubePool _cubePool = null;
+        [SerializeField] ExamplePool _cubePool = null;
 
-        SampleCube _currentCube = null;
+        PooledObject _currentCube = null;
 
         void Update()
         {

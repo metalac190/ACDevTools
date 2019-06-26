@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ACDev.Utility;
-using ACDev.Pooling;
+using ACDev.Systems;
 
 namespace ACDev.Samples
 {
-    public class CubePool : GenericObjectPool<SampleCube>
+    public class ExamplePool : GenericObjectPool<PooledObject>
     {
 
     }
