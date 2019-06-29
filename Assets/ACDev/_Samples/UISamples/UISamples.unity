@@ -1011,7 +1011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f546f7b24ad464e8bde5ef97dc88fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hoverText: 
+  _hoverText: Sample Hover Text Description
   _hoverDelay: 0.25
   _tooltipBoxPrefab: {fileID: 5133091974197217510, guid: 6415fb23590bd134f8bb0698cbd9cf56,
     type: 3}

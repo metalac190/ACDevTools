@@ -1,10 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Procedural animation through static classes for UI transforms
+/// Procedural animation through static classes for UI transforms.
 /// Created by: Adam Chandler
 /// </summary>
 namespace ACDev.UI
@@ -16,9 +15,9 @@ namespace ACDev.UI
             // scale value that recalculates every frame
             float newXYScale;
             // growth cycle
-            for (float t = 0; t < 1.0f; t += Time.deltaTime / scaleSpeedInSeconds)
+            for (float t = 0; t <= scaleSpeedInSeconds; t += Time.deltaTime)
             {
-                newXYScale = Mathf.Lerp(startScale, endScale, t);
+                newXYScale = Mathf.Lerp(startScale, endScale, t / scaleSpeedInSeconds);
                 panelToAnimate.localScale = new Vector2(newXYScale, newXYScale);
                 yield return null;
             }
@@ -26,15 +25,15 @@ namespace ACDev.UI
             panelToAnimate.localScale = new Vector2(endScale, endScale);
         }
 
-        public static IEnumerator MovePanel(Transform panelToAnimate, float moveDuration, Vector2 startPos, Vector2 endPos)
+        public static IEnumerator MovePanel(Transform panelToAnimate, float moveSpeed, Vector2 startPos, Vector2 endPos)
         {
             float currentXPos = startPos.x;
             float currentYPos = startPos.y;
             // animate
-            for (float t = 0; t < 1.0f; t += Time.deltaTime / moveDuration)
+            for (float t = 0; t <= moveSpeed; t += Time.deltaTime)
             {
-                currentXPos = Mathf.Lerp(startPos.x, endPos.x, t);
-                currentYPos = Mathf.Lerp(startPos.y, endPos.y, t);
+                currentXPos = Mathf.Lerp(startPos.x, endPos.x, t / moveSpeed);
+                currentYPos = Mathf.Lerp(startPos.y, endPos.y, t / moveSpeed);
                 panelToAnimate.localPosition = new Vector2(currentXPos, currentYPos);
                 yield return null;
             }
@@ -45,16 +44,16 @@ namespace ACDev.UI
         public static IEnumerator ScaleText(Text textUI, float scaleSpeed, int endFontSize)
         {
             int startFontSize = textUI.fontSize;
-            int currentFontSize = startFontSize;
-            // keeping track of decimal separately, so that we can round to int
-            float currentFontSizeExact = currentFontSize;
-            // growth cycle
-            for (float t = 0; t < 1.0f; t += Time.deltaTime / scaleSpeed)
-            {
 
-                currentFontSizeExact = Mathf.Lerp(startFontSize, endFontSize, t);
-                currentFontSize = Mathf.RoundToInt(currentFontSizeExact);
-                textUI.fontSize = currentFontSize;
+            // keeping track of decimal separately, so that we can round to int
+            float fontSizeExact = startFontSize;
+            int fontSizeRounded = startFontSize;
+            // growth cycle
+            for (float t = 0; t <= scaleSpeed; t += Time.deltaTime)
+            {
+                fontSizeExact = Mathf.Lerp(startFontSize, endFontSize, t / scaleSpeed);
+                fontSizeRounded = Mathf.RoundToInt(fontSizeExact);
+                textUI.fontSize = fontSizeRounded;
                 yield return null;
             }
             // ensure we hit our end point
