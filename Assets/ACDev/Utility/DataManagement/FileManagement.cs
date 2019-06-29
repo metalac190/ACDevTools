@@ -8,7 +8,7 @@ using System.IO;
 /// Most are modified version of System.IO functions.
 /// Created by: Adam Chandler
 /// </summary>
-namespace ACDev.DataManagement
+namespace ACDev.Utility
 {
     public static class FileManagement
     {
