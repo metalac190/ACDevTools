@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO make this work without requiring 0 transform parent, and with Cinemachine
 /// <summary>
 /// This script simulates Camera Shake by animating the local position of the Camera
 /// Created by: Adam Chandler, based on Camera Shake tutorial by Brackys
