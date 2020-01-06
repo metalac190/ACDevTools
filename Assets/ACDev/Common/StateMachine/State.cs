@@ -1,25 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-/// <summary>
-/// Inherit from this class to create a new state.
-/// Override Enter() and Exit() to make things happen at the appropriate time,
-/// as they will get called from the state machine.
-/// NOTE: Do no try to change state while in mid transition.
-/// </summary>
+[Serializable]
+public class State {
+	public string Label { get; private set; }
+	Action _customEnter = delegate { };
+	Action _customExit = delegate { };
 
-public abstract class State : MonoBehaviour
-{
-    // override this function to make things happen on State Enter
-    public virtual void Enter()
-    {
+	public State (Action enter, Action exit = null, string label = "") {
+		_customEnter = enter;
+		_customExit = exit;
+		this.Label = label;
+	}
 
-    }
-    // override this function to make things happen on State Exit
-    public virtual void Exit()
-    {
+	public void Enter () {
+		if (_customEnter != null)
+			_customEnter();
+	}
 
-    }
+	public void Exit () {
+		if (_customExit != null)
+			_customExit();
+	}
 }
-

@@ -1,53 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 /// <summary>
-/// This class handles the transitions between multiple states. Inherit from this
-/// class and then use ChangeState<StateToChange>(); to transition between states
+/// State machine system modified from theliquidfire.com's example state machines.
+/// To use:
+/// 1. Create a partial class that contains an instance of your StateMachine
+///     ( StateMachine _stateMachine = new StateMachine(); )
+/// 2. Create a partial class with the SAME NAME as the state you'd like to create
+///     Ex. IntroState.cs
+/// 3. Create a State inside of our new ExampleState class that uses the State Constructor
+///     Ex. _exampleState = new State(OnEnterExampleState, OnExitExampleState, "Example");
+/// 4. Create the OnEnterExampleState()/Exit() functions below and fill in as needed
+/// 5. Put controllers on the root class that contains the StateMachine
 /// </summary>
+[System.Serializable]
+public class StateMachine {
+	public State Current { get; private set; }
 
-public class StateMachine : MonoBehaviour
-{
-    protected State _currentState;
-    public virtual State CurrentState
-    {
-        get { return _currentState; }
-        set { Transition(value); }
-    }
-    protected bool _inTransition;
+	public void ChangeState (State target)
+	{
+		if (Current == target)
+			return;
 
-    // Gets a state component from the StateMachine
-    public virtual T GetState<T>() where T : State
-    {
-        T target = GetComponent<T>();
-        if (target == null)
-        {
-            target = gameObject.AddComponent<T>();
-        }
-        return target;
-    }
+		if (Current != null)
+			Current.Exit();
 
-    // Transition to a new state
-    public virtual void ChangeState<T>() where T : State
-    {
-        CurrentState = GetState<T>();
-    }
+		Current = target;
 
-    private void Transition(State newState)
-    {
-        // if it's the same state, ignore transition
-        if (_currentState == newState || _inTransition) { return; }
-        // we are now transitioning
-        _inTransition = true;
-        // handle the previous state first
-        _currentState?.Exit();
-        // assign new state
-        _currentState = newState;
-        // enter new state
-        _currentState?.Enter();
-        // no longer transitioning
-        _inTransition = false;
-    }
+		if (Current != null)
+			Current.Enter();
+	}
 }
-
