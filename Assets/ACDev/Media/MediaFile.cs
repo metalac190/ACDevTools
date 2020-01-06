@@ -7,22 +7,20 @@ using UnityEngine;
 /// more readable
 /// Created by: Adam Chandler
 /// </summary>
-namespace ACDev.Media
+
+public enum MediaType { Image, Video, Audio, Unsupported, None }
+
+public class MediaFile
 {
-    public enum MediaType { Image, Video, Audio, Unsupported, None }
+    public string FileName { get; private set; } = "";
+    public string FullFilePath { get; private set; } = "";
+    public MediaType MediaType { get; private set; } = MediaType.Unsupported;
 
-    public class MediaFile
+    public MediaFile(string fullFilePath, string fileName, MediaType mediaType)
     {
-        public string FileName { get; private set; } = "";
-        public string FullFilePath { get; private set; } = "";
-        public MediaType MediaType { get; private set; } = MediaType.Unsupported;
-
-        public MediaFile(string fullFilePath, string fileName, MediaType mediaType)
-        {
-            this.FullFilePath = fullFilePath;
-            this.FileName = fileName;
-            this.MediaType = mediaType;
-        }
+        this.FullFilePath = fullFilePath;
+        this.FileName = fileName;
+        this.MediaType = mediaType;
     }
 }
 

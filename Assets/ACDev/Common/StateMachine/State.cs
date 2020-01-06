@@ -8,6 +8,7 @@ using UnityEngine;
 /// as they will get called from the state machine.
 /// NOTE: Do no try to change state while in mid transition.
 /// </summary>
+
 public abstract class State : MonoBehaviour
 {
     // override this function to make things happen on State Enter
@@ -21,3 +22,4 @@ public abstract class State : MonoBehaviour
 
     }
 }
+

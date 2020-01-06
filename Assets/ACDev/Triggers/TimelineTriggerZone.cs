@@ -8,6 +8,7 @@ using UnityEngine.Playables;
 /// volume, and the conditions are met.
 /// Repurposed from the Unity 3DGameKit.
 /// </summary>
+
 [RequireComponent(typeof(Collider))]
 public class TimelineTriggerZone : MonoBehaviour
 {
@@ -45,4 +46,5 @@ public class TimelineTriggerZone : MonoBehaviour
         OnDirectorFinish.Invoke();
     }
 }
+
 

@@ -10,150 +10,178 @@ using System;
 /// Make sure that you attach this script to an Image component. You can optionally call the
 /// flash remotely and pass in new flash values, or you can predefine settings in the Inspector
 /// </summary>
-namespace ACDev.UI
+
+[RequireComponent(typeof(Image))]
+public class FlashImage : MonoBehaviour
 {
-    [RequireComponent(typeof(Image))]
-    public class FlashImage : MonoBehaviour
+    [Header("General")]
+    [SerializeField] bool _loopOnEnable = false;
+    [Range(0, 1)] [SerializeField] float _startingAlpha = 0;
+    [SerializeField] float _secondsForOneFlash = 2f;
+    public float SecondsForOneFlash
     {
-        [Header("General")]
-        [SerializeField] bool _loopOnEnable = false;
-        [Range(0, 1)] [SerializeField] float _startingAlpha = 0;
-        [SerializeField] float _secondsForOneFlash = 2f;
-        public float SecondsForOneFlash
+        get { return _secondsForOneFlash; }
+        private set
         {
-            get { return _secondsForOneFlash; }
-            private set
+            if(value < 0)
             {
-                if(value < 0)
-                {
-                    value = 0;
-                }
-                _secondsForOneFlash = value;
+                value = 0;
             }
+            _secondsForOneFlash = value;
         }
-        [Range(0, 1)]
-        [SerializeField] float _minAlpha = 0f;
-        public float MinAlpha
+    }
+    [Range(0, 1)]
+    [SerializeField] float _minAlpha = 0f;
+    public float MinAlpha
+    {
+        get { return _minAlpha; }
+        private set
         {
-            get { return _minAlpha; }
-            private set
-            {
-                _minAlpha = Mathf.Clamp(value, 0, 1);
-            }
+            _minAlpha = Mathf.Clamp(value, 0, 1);
         }
-        [Range(0, 1)]
-        [SerializeField] float _maxAlpha = 1f;
-        public float MaxAlpha
+    }
+    [Range(0, 1)]
+    [SerializeField] float _maxAlpha = 1f;
+    public float MaxAlpha
+    {
+        get { return _maxAlpha; }
+        private set
         {
-            get { return _maxAlpha; }
-            private set
-            {
-                _maxAlpha = Mathf.Clamp(value, 0, 1);
-            }
+            _maxAlpha = Mathf.Clamp(value, 0, 1);
         }
+    }
 
-        // events
-        public event Action OnStop = delegate { };
-        public event Action OnCycleStart = delegate { };
-        public event Action OnCycleComplete = delegate { };
+    // events
+    public event Action OnStop = delegate { };
+    public event Action OnCycleStart = delegate { };
+    public event Action OnCycleComplete = delegate { };
 
-        Coroutine _flashRoutine = null;
-        Image _flashImage;
+    Coroutine _flashRoutine = null;
+    Image _flashImage;
 
-        #region Initialization
-        private void Awake()
+    #region Initialization
+    private void Awake()
+    {
+        _flashImage = GetComponent<Image>();
+        // initial state
+        SetAlphaToDefault();
+    }
+
+    private void OnEnable()
+    {
+        if (_loopOnEnable)
         {
-            _flashImage = GetComponent<Image>();
-            // initial state
-            SetAlphaToDefault();
+            StartFlashLoop();
         }
+    }
 
-        private void OnEnable()
+    private void OnDisable()
+    {
+        if(_loopOnEnable)
         {
-            if (_loopOnEnable)
-            {
-                StartFlashLoop();
-            }
+            StopFlashLoop();
         }
+    }
+    #endregion
 
-        private void OnDisable()
+    #region Public Functions
+    public void Flash()
+    {
+        if (_secondsForOneFlash <= 0) { return; }    // 0 speed wouldn't make sense
+
+        if (_flashRoutine != null)
         {
-            if(_loopOnEnable)
-            {
-                StopFlashLoop();
-            }
+            StopCoroutine(_flashRoutine);
         }
-        #endregion
+        _flashRoutine = StartCoroutine(FlashOnce(SecondsForOneFlash, MinAlpha, MaxAlpha));
+    }
 
-        #region Public Functions
-        public void Flash()
+    public void Flash(float secondsForOneFlash, float minAlpha, float maxAlpha)
+    {
+        if (_secondsForOneFlash <= 0) { return; }    // 0 speed wouldn't make sense
+
+        MinAlpha = minAlpha;
+        MaxAlpha = maxAlpha;
+
+        if (_flashRoutine != null)
         {
-            if (_secondsForOneFlash <= 0) { return; }    // 0 speed wouldn't make sense
-
-            if (_flashRoutine != null)
-            {
-                StopCoroutine(_flashRoutine);
-            }
-            _flashRoutine = StartCoroutine(FlashOnce(SecondsForOneFlash, MinAlpha, MaxAlpha));
+            StopCoroutine(_flashRoutine);
         }
+        _flashRoutine = StartCoroutine(FlashLoop(secondsForOneFlash, MinAlpha, MaxAlpha));
+    }
 
-        public void Flash(float secondsForOneFlash, float minAlpha, float maxAlpha)
+    public void StartFlashLoop()
+    {
+        if(_secondsForOneFlash <= 0) { return; }    // 0 speed wouldn't make sense
+
+        if(_flashRoutine != null)
         {
-            if (_secondsForOneFlash <= 0) { return; }    // 0 speed wouldn't make sense
-
-            MinAlpha = minAlpha;
-            MaxAlpha = maxAlpha;
-
-            if (_flashRoutine != null)
-            {
-                StopCoroutine(_flashRoutine);
-            }
-            _flashRoutine = StartCoroutine(FlashLoop(secondsForOneFlash, MinAlpha, MaxAlpha));
+            StopCoroutine(_flashRoutine);
         }
+        _flashRoutine = StartCoroutine(FlashLoop(SecondsForOneFlash, MinAlpha, MaxAlpha));
+    }
+    public void StartFlashLoop(float secondsForOneFlash, float minAlpha, float maxAlpha)
+    {
+        if (_secondsForOneFlash <= 0) { return; }    // 0 speed wouldn't make sense
 
-        public void StartFlashLoop()
+        SetNewFlashValues(secondsForOneFlash, minAlpha, maxAlpha);
+
+        if (_flashRoutine != null)
         {
-            if(_secondsForOneFlash <= 0) { return; }    // 0 speed wouldn't make sense
-
-            if(_flashRoutine != null)
-            {
-                StopCoroutine(_flashRoutine);
-            }
-            _flashRoutine = StartCoroutine(FlashLoop(SecondsForOneFlash, MinAlpha, MaxAlpha));
+            StopCoroutine(_flashRoutine);
         }
-        public void StartFlashLoop(float secondsForOneFlash, float minAlpha, float maxAlpha)
+        _flashRoutine = StartCoroutine(FlashLoop(secondsForOneFlash, minAlpha, maxAlpha));
+    }
+
+    public void StopFlashLoop()
+    {
+        if(_flashRoutine != null)
         {
-            if (_secondsForOneFlash <= 0) { return; }    // 0 speed wouldn't make sense
-
-            SetNewFlashValues(secondsForOneFlash, minAlpha, maxAlpha);
-
-            if (_flashRoutine != null)
-            {
-                StopCoroutine(_flashRoutine);
-            }
-            _flashRoutine = StartCoroutine(FlashLoop(secondsForOneFlash, minAlpha, maxAlpha));
+            StopCoroutine(_flashRoutine);
         }
+        SetAlphaToDefault();
 
-        public void StopFlashLoop()
-        {
-            if(_flashRoutine != null)
-            {
-                StopCoroutine(_flashRoutine);
-            }
-            SetAlphaToDefault();
+        OnStop.Invoke();
+    }
+    #endregion
 
-            OnStop.Invoke();
-        }
-        #endregion
-
-        #region Private Functions
-        IEnumerator FlashOnce(float secondsForOneFlash, float minAlpha, float maxAlpha)
-        {
+    #region Private Functions
+    IEnumerator FlashOnce(float secondsForOneFlash, float minAlpha, float maxAlpha)
+    {
             
-            // half the flash time should be on flash in, the other half for flash out
-            float flashInDuration = secondsForOneFlash / 2;
-            float flashOutDuration = secondsForOneFlash / 2;
+        // half the flash time should be on flash in, the other half for flash out
+        float flashInDuration = secondsForOneFlash / 2;
+        float flashOutDuration = secondsForOneFlash / 2;
 
+        OnCycleStart.Invoke();
+        // flash in
+        for (float t = 0f; t <= flashInDuration; t += Time.deltaTime)
+        {
+            Color newColor = _flashImage.color;
+            newColor.a = Mathf.Lerp(minAlpha, maxAlpha, t / flashInDuration);
+            _flashImage.color = newColor;
+            yield return null;
+        }
+        // flash out
+        for (float t = 0f; t <= flashOutDuration; t += Time.deltaTime)
+        {
+            Color newColor = _flashImage.color;
+            newColor.a = Mathf.Lerp(maxAlpha, minAlpha, t / flashOutDuration);
+            _flashImage.color = newColor;
+            yield return null;
+        }
+
+        OnCycleComplete.Invoke();
+    }
+
+    IEnumerator FlashLoop(float secondsForOneFlash, float minAlpha, float maxAlpha)
+    {
+        // half the flash time should be on flash in, the other half for flash out
+        float flashInDuration = secondsForOneFlash / 2;
+        float flashOutDuration = secondsForOneFlash / 2;
+        // start the flash cycle
+        while (true)
+        {
             OnCycleStart.Invoke();
             // flash in
             for (float t = 0f; t <= flashInDuration; t += Time.deltaTime)
@@ -171,54 +199,24 @@ namespace ACDev.UI
                 _flashImage.color = newColor;
                 yield return null;
             }
-
+                
             OnCycleComplete.Invoke();
         }
-
-        IEnumerator FlashLoop(float secondsForOneFlash, float minAlpha, float maxAlpha)
-        {
-            // half the flash time should be on flash in, the other half for flash out
-            float flashInDuration = secondsForOneFlash / 2;
-            float flashOutDuration = secondsForOneFlash / 2;
-            // start the flash cycle
-            while (true)
-            {
-                OnCycleStart.Invoke();
-                // flash in
-                for (float t = 0f; t <= flashInDuration; t += Time.deltaTime)
-                {
-                    Color newColor = _flashImage.color;
-                    newColor.a = Mathf.Lerp(minAlpha, maxAlpha, t / flashInDuration);
-                    _flashImage.color = newColor;
-                    yield return null;
-                }
-                // flash out
-                for (float t = 0f; t <= flashOutDuration; t += Time.deltaTime)
-                {
-                    Color newColor = _flashImage.color;
-                    newColor.a = Mathf.Lerp(maxAlpha, minAlpha, t / flashOutDuration);
-                    _flashImage.color = newColor;
-                    yield return null;
-                }
-                
-                OnCycleComplete.Invoke();
-            }
-        }
-
-        private void SetAlphaToDefault()
-        {
-            Color newColor = _flashImage.color;
-            newColor.a = _startingAlpha;
-            _flashImage.color = newColor;
-        }
-
-        private void SetNewFlashValues(float secondsForOneFlash, float minAlpha, float maxAlpha)
-        {
-            SecondsForOneFlash = secondsForOneFlash;
-            MinAlpha = minAlpha;
-            MaxAlpha = maxAlpha;
-        }
-        #endregion
     }
+
+    private void SetAlphaToDefault()
+    {
+        Color newColor = _flashImage.color;
+        newColor.a = _startingAlpha;
+        _flashImage.color = newColor;
+    }
+
+    private void SetNewFlashValues(float secondsForOneFlash, float minAlpha, float maxAlpha)
+    {
+        SecondsForOneFlash = secondsForOneFlash;
+        MinAlpha = minAlpha;
+        MaxAlpha = maxAlpha;
+    }
+    #endregion
 }
 

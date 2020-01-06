@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ACDev.Systems;
+using ACDev;
 
 namespace ACDev.Samples
 {

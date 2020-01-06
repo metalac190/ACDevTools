@@ -9,16 +9,14 @@ using UnityEngine;
 /// do not need dynamic colliders, but could benefit from visual movement.
 /// </summary>
 
-namespace ACDev.Animations
-{
-    public class RotatorTransform2D : MonoBehaviour
-    {
-        [SerializeField] float _rotateSpeed = 25;
 
-        void Update()
-        {
-            Vector3 direction = new Vector3(0, 0, 1);
-            transform.Rotate(direction * _rotateSpeed * Time.deltaTime);
-        }
+public class RotatorTransform2D : MonoBehaviour
+{
+    [SerializeField] float _rotateSpeed = 25;
+
+    void Update()
+    {
+        Vector3 direction = new Vector3(0, 0, 1);
+        transform.Rotate(direction * _rotateSpeed * Time.deltaTime);
     }
 }

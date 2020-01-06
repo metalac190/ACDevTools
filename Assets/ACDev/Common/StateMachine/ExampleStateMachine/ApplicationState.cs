@@ -17,3 +17,4 @@ public class ApplicationState : State
         StateController = GetComponent<ApplicationSM>();
     }
 }
+

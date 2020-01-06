@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ACDev.UI;
-using TMPro;
 using UnityEngine.UI;
 
 namespace ACDev.Samples
@@ -10,7 +8,7 @@ namespace ACDev.Samples
     public class UISampleController : MonoBehaviour
     {
         [SerializeField] FlashImage _flashImage = null;
-        [SerializeField] TextMeshProUGUI _countText = null;
+        [SerializeField] Text _countText = null;
         [SerializeField] Slider _timeSlider = null;
 
         [SerializeField] GameObject _popupPanel = null;

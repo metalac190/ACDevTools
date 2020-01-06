@@ -23,7 +23,7 @@ public class AudioPool : MonoBehaviour
 
     public AudioSource Get()
     {
-        if(sourcePool.Count == 0)
+        if (sourcePool.Count == 0)
         {
             CreatePoolObject();
         }
@@ -57,3 +57,4 @@ public class AudioPool : MonoBehaviour
         poolSource.maxDistance = _poolSource.maxDistance;
     }
 }
+

@@ -6,6 +6,7 @@ using UnityEngine;
 /// This class handles the transitions between multiple states. Inherit from this
 /// class and then use ChangeState<StateToChange>(); to transition between states
 /// </summary>
+
 public class StateMachine : MonoBehaviour
 {
     protected State _currentState;
@@ -20,13 +21,13 @@ public class StateMachine : MonoBehaviour
     public virtual T GetState<T>() where T : State
     {
         T target = GetComponent<T>();
-        if(target == null)
+        if (target == null)
         {
             target = gameObject.AddComponent<T>();
         }
         return target;
     }
-    
+
     // Transition to a new state
     public virtual void ChangeState<T>() where T : State
     {
@@ -36,7 +37,7 @@ public class StateMachine : MonoBehaviour
     private void Transition(State newState)
     {
         // if it's the same state, ignore transition
-        if(_currentState == newState || _inTransition) { return; }
+        if (_currentState == newState || _inTransition) { return; }
         // we are now transitioning
         _inTransition = true;
         // handle the previous state first
@@ -49,3 +50,4 @@ public class StateMachine : MonoBehaviour
         _inTransition = false;
     }
 }
+

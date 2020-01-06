@@ -9,31 +9,28 @@ using UnityEngine;
 /// do not need dynamic colliders, but could benefit from visual movement.
 /// </summary>
 
-namespace ACDev.Animations
+public class RotatorTransform : MonoBehaviour
 {
-    public class RotatorTransform : MonoBehaviour
+    [SerializeField] Vector3 _rotateDirection = new Vector3(0, 1, 0);
+    [SerializeField] float _rotateSpeed = 25;
+
+    void Awake()
     {
-        [SerializeField] Vector3 _rotateDirection = new Vector3(0, 1, 0);
-        [SerializeField] float _rotateSpeed = 25;
+        CheckForRigidbody();
+    }
 
-        void Awake()
+    void CheckForRigidbody()
+    {
+        if(GetComponent<Rigidbody>() != null)
         {
-            CheckForRigidbody();
+            // there's a rigidbody attached. Don't manipulate transform
+            this.enabled = false;
         }
+    }
 
-        void CheckForRigidbody()
-        {
-            if(GetComponent<Rigidbody>() != null)
-            {
-                // there's a rigidbody attached. Don't manipulate transform
-                this.enabled = false;
-            }
-        }
-
-        void Update()
-        {
-            transform.Rotate(_rotateDirection * _rotateSpeed * Time.deltaTime);
-        }
+    void Update()
+    {
+        transform.Rotate(_rotateDirection * _rotateSpeed * Time.deltaTime);
     }
 }
 
