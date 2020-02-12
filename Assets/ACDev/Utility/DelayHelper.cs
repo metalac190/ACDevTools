@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public static class Timer
+public static class DelayHelper
 {
     public static Coroutine DelayAction
         (this MonoBehaviour monoBehaviour, Action action, float time)
