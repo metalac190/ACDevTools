@@ -5,7 +5,8 @@ using System;
 
 public static class Timer
 {
-    public static Coroutine Invoke(this MonoBehaviour monoBehaviour, Action action, float time)
+    public static Coroutine Invoke
+        (this MonoBehaviour monoBehaviour, Action action, float time)
     {
         return monoBehaviour.StartCoroutine(InvokeFunction(action, time));
     }
