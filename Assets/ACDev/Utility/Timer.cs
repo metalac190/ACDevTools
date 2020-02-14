@@ -10,7 +10,7 @@ public static class Timer
     {
         if (coroutine != null)
             monoBehaviour.StopCoroutine(coroutine);
-        return coroutine = monoBehaviour.StartCoroutine(DelayActionRoutine(action, time));
+        return monoBehaviour.StartCoroutine(DelayActionRoutine(action, time));
     }
     public static Coroutine DelayAction
         (MonoBehaviour monoBehaviour, Action action, float time)
