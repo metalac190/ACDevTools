@@ -15,6 +15,7 @@ namespace ACDev.Samples
 
         Coroutine _countRoutine = null;
         Coroutine _sliderRoutine = null;
+        Coroutine _counterRoutine = null;
 
         void Update()
         {
@@ -82,6 +83,18 @@ namespace ACDev.Samples
             {
                 _popupPanel.SetActive(false);
             }
+
+            // time
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                Debug.Log("Start");
+               _counterRoutine =  Timer.DelayActionRetriggerable(this, Test, 1.5f, _counterRoutine);
+            }
+        }
+
+        void Test()
+        {
+            Debug.Log("Finished");
         }
     }
 }
