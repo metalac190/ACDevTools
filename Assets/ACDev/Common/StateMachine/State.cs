@@ -1,24 +1,21 @@
-using System;
+using System.Collections;
 
-[Serializable]
-public class State {
-	public string Label { get; private set; }
-	Action _customEnter = delegate { };
-	Action _customExit = delegate { };
+public abstract class State
+{
+    protected StateMachine StateMachine;
 
-	public State (Action enter, Action exit = null, string label = "") {
-		_customEnter = enter;
-		_customExit = exit;
-		this.Label = label;
-	}
+    public virtual IEnumerator Enter()
+    {
+        yield return null;
+    }
 
-	public void Enter () {
-		if (_customEnter != null)
-			_customEnter();
-	}
+    public virtual void Tick()
+    {
 
-	public void Exit () {
-		if (_customExit != null)
-			_customExit();
-	}
+    }
+
+    public virtual IEnumerator Exit()
+    {
+        yield return null;
+    }
 }
