@@ -5,23 +5,26 @@ using System;
 
 namespace ACDev.Samples
 {
+    [System.Serializable]
     public class PlayerTurnState : IState
     {
-        public event Action PlayerTurnStart;
-        public event Action PlayerTurnEnd;
+        AudioSource _audioSource;
+
         // hold on to references here
         GameController _owner;
         // pass whatever information you need into the constructor
-        public PlayerTurnState(GameController owner)
+        public PlayerTurnState(GameController owner, AudioSource audioSource)
         {
             _owner = owner;
+            _audioSource = audioSource;
         }
 
         public IEnumerator Enter()
         {
             Debug.Log("PlayerTurn has started!");
-            PlayerTurnStart?.Invoke();
-            Debug.Log("Player Name: " + _owner.PlayerName);
+
+            _audioSource.Play();
+
             yield break;
         }
 
@@ -33,7 +36,6 @@ namespace ACDev.Samples
         public IEnumerator Exit()
         {
             Debug.Log("PlayerTurn has ended!");
-            PlayerTurnEnd?.Invoke();
             yield break;
         }
     }

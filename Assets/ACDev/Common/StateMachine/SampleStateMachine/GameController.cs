@@ -8,34 +8,23 @@ namespace ACDev.Samples
     // TODO find a better implementation through a subscription/dictionary model, instead of random Properties
     public class GameController : StateMachine
     {
-        // we can store info and pass this down into the state, if we want
-        public string PlayerName { get; private set; } = "Adam the Mighty";
+        public event Action BeginEnemyPhase;
 
-        // ensure that the state always exists, if something tries to access it
-        PlayerTurnState _playerTurnState;
-        public PlayerTurnState PlayerTurnState 
+        AudioSource _audioSource;
+
+        [SerializeField] PlayerTurnState _playerTurnState;
+        public PlayerTurnState PlayerTurnState { get => _playerTurnState; }
+
+        [SerializeField] EnemyTurnState _enemyTurnState;
+        public EnemyTurnState EnemyTurnState { get => _enemyTurnState; }
+
+        private void Awake()
         {
-            get
-            {
-                if (_playerTurnState == null)
-                {
-                    _playerTurnState = new PlayerTurnState(this);
-                }
-                return _playerTurnState;
-            }
-        }
-        // ensure that the state always exists, if something tries to access it
-        EnemyTurnState _enemyTurnState;
-        public EnemyTurnState EnemyTurnState
-        {
-            get
-            {
-                if(_enemyTurnState == null)
-                {
-                    _enemyTurnState = new EnemyTurnState(this);
-                }
-                return _enemyTurnState;
-            }
+            // get components here, if desired
+            _audioSource = GetComponent<AudioSource>();
+            // set up your states
+            _playerTurnState = new PlayerTurnState(this, _audioSource);
+            _enemyTurnState = new EnemyTurnState(this);
         }
 
         private void Start()

@@ -5,17 +5,16 @@ using System;
 
 namespace ACDev.Samples
 {
+    [System.Serializable]
     public class EnemyTurnState : IState
     {
-        GameController _gameController;
+        [SerializeField] float _enemyTurnDelay = 1.5f;
 
-        public event Action EnemyPlayedCard = delegate { };
+        GameController _owner;
 
-        float _enemyTurnDelay = 1.5f;
-
-        public EnemyTurnState(GameController gameController)
+        public EnemyTurnState(GameController owner)
         {
-            _gameController = gameController;
+            _owner = owner;
         }
 
         public IEnumerator Enter()
@@ -25,7 +24,6 @@ namespace ACDev.Samples
             Debug.Log("Enemy making decision");
             yield return new WaitForSeconds(_enemyTurnDelay);
             Debug.Log("Enemy acted!");
-            EnemyPlayedCard.Invoke();
         }
 
         public void Tick()
@@ -33,7 +31,7 @@ namespace ACDev.Samples
             // we can even use Tick for a single frame, to transition after Enter() is done.
             // calling it this way just triggers state change as soon as it's able (and locks it
             // to prevent multiple calls)
-            _gameController.ChangeState(_gameController.PlayerTurnState);
+            _owner.ChangeState(_owner.PlayerTurnState);
         }
 
         public IEnumerator Exit()
