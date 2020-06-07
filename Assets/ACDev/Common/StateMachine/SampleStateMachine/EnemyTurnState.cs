@@ -17,12 +17,12 @@ namespace ACDev.Samples
             _owner = owner;
         }
 
-        public IEnumerator Enter()
+        public void Enter()
         {
             Debug.Log("...Entering EnemyTurn state");
 
             Debug.Log("Enemy making decision");
-            yield return new WaitForSeconds(_enemyTurnDelay);
+            Debug.Log("Wait: " + _enemyTurnDelay + " seconds...");
             Debug.Log("Enemy acted!");
         }
 
@@ -34,10 +34,9 @@ namespace ACDev.Samples
             _owner.ChangeState(_owner.PlayerTurnState);
         }
 
-        public IEnumerator Exit()
+        public void Exit()
         {
             Debug.Log("Exiting EnemyTurn state...");
-            yield break;
         }
     }
 }

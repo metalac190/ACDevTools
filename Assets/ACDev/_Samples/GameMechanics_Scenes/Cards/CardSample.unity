@@ -151,11 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab534fb7b86e4aa4e9b6d234e271e58c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTurnState:
-    _startSound: {fileID: 0}
-    _startParticle: {fileID: 0}
   _enemyTurnState:
-    _enemyTurnDelay: 1.5
+    _enemyTurnDelay: 2
 --- !u!4 &152682266
 Transform:
   m_ObjectHideFlags: 0

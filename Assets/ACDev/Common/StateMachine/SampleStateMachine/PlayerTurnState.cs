@@ -5,7 +5,6 @@ using System;
 
 namespace ACDev.Samples
 {
-    [System.Serializable]
     public class PlayerTurnState : IState
     {
         AudioSource _audioSource;
@@ -19,13 +18,11 @@ namespace ACDev.Samples
             _audioSource = audioSource;
         }
 
-        public IEnumerator Enter()
+        public void Enter()
         {
             Debug.Log("PlayerTurn has started!");
 
             _audioSource.Play();
-
-            yield break;
         }
 
         public void Tick()
@@ -33,10 +30,9 @@ namespace ACDev.Samples
             
         }
 
-        public IEnumerator Exit()
+        public void Exit()
         {
             Debug.Log("PlayerTurn has ended!");
-            yield break;
         }
     }
 }

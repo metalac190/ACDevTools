@@ -25,7 +25,7 @@ public abstract class StateMachine : MonoBehaviour
 		if (CurrentState == newState || _inTransition)
 			return;
 
-		StartCoroutine(ChangeStateRoutine(newState));
+		ChangeStateRoutine(newState);
 	}
 
 	public void RevertState()
@@ -34,12 +34,12 @@ public abstract class StateMachine : MonoBehaviour
 			ChangeState(_previousState);
 	}
 
-	IEnumerator ChangeStateRoutine(IState newState)
+	void ChangeStateRoutine(IState newState)
 	{
 		_inTransition = true;
 		// begin our exit sequence, to prepare for new state
 		if(CurrentState != null)
-			yield return StartCoroutine(CurrentState.Exit());
+			CurrentState.Exit();
 		// save our current state, in case we want to return to it
 		if (_previousState != null)
 			_previousState = CurrentState;
@@ -48,7 +48,7 @@ public abstract class StateMachine : MonoBehaviour
 
 		// begin our new Enter sequence
 		if(CurrentState != null)
-			yield return StartCoroutine(CurrentState.Enter());
+			CurrentState.Enter();
 
 		_inTransition = false;
 	}

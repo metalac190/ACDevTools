@@ -12,19 +12,17 @@ namespace ACDev.Samples
 
         AudioSource _audioSource;
 
-        [SerializeField] PlayerTurnState _playerTurnState;
-        public PlayerTurnState PlayerTurnState { get => _playerTurnState; }
+        public PlayerTurnState PlayerTurnState { get; private set; }
 
-        [SerializeField] EnemyTurnState _enemyTurnState;
-        public EnemyTurnState EnemyTurnState { get => _enemyTurnState; }
+        public EnemyTurnState EnemyTurnState { get; private set; }
 
         private void Awake()
         {
             // get components here, if desired
             _audioSource = GetComponent<AudioSource>();
             // set up your states
-            _playerTurnState = new PlayerTurnState(this, _audioSource);
-            _enemyTurnState = new EnemyTurnState(this);
+            PlayerTurnState = new PlayerTurnState(this, _audioSource);
+            EnemyTurnState = new EnemyTurnState(this);
         }
 
         private void Start()
