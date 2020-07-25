@@ -8,20 +8,23 @@ namespace ACDev.Samples
     {
         [SerializeField] ExamplePool _cubePool = null;
 
-        PooledObject _currentCube = null;
-
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                _currentCube = _cubePool.Get();
-                _currentCube.gameObject.SetActive(true);
+                PooledObject newPooledObject = _cubePool.GetObject();
+                newPooledObject.DoThing();
+                StartCoroutine(RemoveObject(newPooledObject, 1.5f));
             }
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                _cubePool.ReturnToPool(_currentCube);
-                _currentCube = null;
-            }
+        }
+
+        IEnumerator RemoveObject(PooledObject pooledObject, 
+            float timeUntilRemove)
+        {
+            // wait, then return object to pool
+            yield return new WaitForSeconds(timeUntilRemove);
+
+            _cubePool.ReturnObject(pooledObject);
         }
     }
 }

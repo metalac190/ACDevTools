@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace ACDev.Samples
 {
-    public class ExamplePool : GenericObjectPool<PooledObject>
+    public class ExamplePool : MBObjectPool<PooledObject>
     {
-
+        protected override void ResetObjectDefaults(PooledObject pooledObject)
+        {
+            // optionally do stuff here, if needed to reset state
+        }
     }
 }
 
