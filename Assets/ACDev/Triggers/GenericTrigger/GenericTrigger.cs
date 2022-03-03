@@ -19,8 +19,6 @@ public class GenericTrigger : MonoBehaviour
     public UnityEvent<Collider> OnEnterTrigger;
     public UnityEvent<Collider> OnExitTrigger;
 
-    private Collider _collider;
-
     [Header("Gizmo Settings")]
     [SerializeField]
     private bool _displayGizmos;
@@ -28,6 +26,9 @@ public class GenericTrigger : MonoBehaviour
     private bool _showOnlyWhileSelected = true;
     [SerializeField]
     private Color _gizmoColor = Color.green;
+
+    private Collider _collider;
+    private bool _alreadyTriggered = false;
 
     private void Awake()
     {
@@ -39,13 +40,16 @@ public class GenericTrigger : MonoBehaviour
     {
         if (IsObjectValid(other.gameObject) == false)
             return;
+        // testing this only in Enter, because Exit could still be
+        // needed to undo changes made in Enter
+        if (_alreadyTriggered && _onlyEnterOnce)
+            return;
 
-        Debug.Log("Entered");
         OnEnterTrigger.Invoke(other);
 
         // if we only use once, disable component
-        if (_onlyEnterOnce)
-            _collider.enabled = false;
+        if (_alreadyTriggered == false)
+            _alreadyTriggered = true;
     }
 
     void OnTriggerExit(Collider other)
@@ -53,7 +57,6 @@ public class GenericTrigger : MonoBehaviour
         if (IsObjectValid(other.gameObject) == false)
             return;
 
-        Debug.Log("Exited");
         OnExitTrigger.Invoke(other);
     }
 
@@ -66,7 +69,7 @@ public class GenericTrigger : MonoBehaviour
         // ensure collider is filled
         if (_collider == null)
             _collider = GetComponent<Collider>();
-        //
+
         Gizmos.color = _gizmoColor;
         Gizmos.DrawCube(transform.position, _collider.bounds.size);
     }
@@ -79,14 +82,18 @@ public class GenericTrigger : MonoBehaviour
             return;
         // ensure collider is filled
         if (_collider == null)
+        {
+            Debug.Log("Find Collider: ");
             _collider = GetComponent<Collider>();
-        //
+        }
+            
         Gizmos.color = _gizmoColor;
         Gizmos.DrawCube(transform.position, _collider.bounds.size);
     }
 
     private bool IsObjectValid(GameObject objectToTest)
     {
+        // if we've specified a specific object
         if (_specificTriggerObject != null
             && objectToTest != _specificTriggerObject)
             return false;
@@ -95,5 +102,10 @@ public class GenericTrigger : MonoBehaviour
             return false;
         else
             return true;
+    }
+
+    public void ResetTrigger()
+    {
+        _alreadyTriggered = false;
     }
 }
