@@ -23,19 +23,8 @@ namespace ACDev.Samples
             // Start Flash Loop
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                _flashImage.StartFlashLoop();
+                _flashImage.Flash(.2f, 0, 1, Color.red);
             }
-            // Stop Flash Loop
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                _flashImage.StopFlashLoop();
-            }
-            // Start Flash Loop with custom parameters
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                _flashImage.StartFlashLoop(1, 0, .5f);
-            }
-
             // Timers
             // Countdown Text
             if (Input.GetKeyDown(KeyCode.A))
