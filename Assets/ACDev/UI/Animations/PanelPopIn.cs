@@ -169,32 +169,34 @@ public class PanelPopIn : MonoBehaviour
 
     IEnumerator MoveInRoutine()
     {
+        float startPosX = _startPos.x + _startPosOffset.x;
+        float startPosY = _startPos.y + _startPosOffset.y;
         float targetPosX = _startPos.x;
         float targetPosY = _startPos.y;
         // animate
         if (_moveInSpeed > 0)
         {
-            float currentPosX = _startPosOffset.x;
-            float currentPosY = _startPosOffset.y;
+            float currentPosX = startPosX;
+            float currentPosY = startPosY;
 
             for (float t = 0; t <= _moveInSpeed; t += Time.deltaTime)
             {
-                currentPosX = Mathf.Lerp(_startPosOffset.x, _startPos.x, t / _moveInSpeed);
-                currentPosY = Mathf.Lerp(_startPosOffset.y, _startPos.y, t / _moveInSpeed);
-                _panelToAnimate.localPosition = new Vector2(currentPosX, currentPosY);
+                currentPosX = Mathf.Lerp(startPosX, targetPosX, t / _moveInSpeed);
+                currentPosY = Mathf.Lerp(startPosY, targetPosY, t / _moveInSpeed);
+                _panelToAnimate.anchoredPosition = new Vector2(currentPosX, currentPosY);
                 yield return null;
             }
         }
 
         // ensure we've hit our end point
-        _panelToAnimate.localPosition = new Vector2(targetPosX, targetPosY);
+        _panelToAnimate.anchoredPosition = new Vector2(targetPosX, targetPosY);
     }
 
     void SetInitialValues()
     {
         _panelToAnimate.localScale = new Vector3(_startingXScale, _startingYScale, 1);
         _canvasGroup.alpha = _startingOpacity;
-        _startPos = _panelToAnimate.localPosition;
+        _startPos = _panelToAnimate.anchoredPosition;
     }
 }
 

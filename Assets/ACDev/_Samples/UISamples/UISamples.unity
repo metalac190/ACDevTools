@@ -556,8 +556,8 @@ MonoBehaviour:
   _overshootReturnSpeed: 0
   _startingOpacity: 0.5
   _opacityChangeSpeed: 0.2
-  _startPosOffset: {x: 0, y: 0}
-  _moveInSpeed: 0
+  _startPosOffset: {x: 0, y: -50}
+  _moveInSpeed: 0.2
 --- !u!225 &259270126
 CanvasGroup:
   m_ObjectHideFlags: 0
