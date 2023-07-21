@@ -103,6 +103,9 @@ public class PanelPopIn : MonoBehaviour
 
         if(_fadeInRoutine != null)
             StopCoroutine(_fadeInRoutine);
+
+        if (_moveInRoutine != null)
+            StopCoroutine(_moveInRoutine);
     }
 
     private IEnumerator PopInRoutine()
