@@ -44,6 +44,7 @@ public class PanelPopIn : MonoBehaviour
     [Tooltip("Local offset from initial position where the move animation " +
         "will begin")]
     [SerializeField] private Vector2 _startPosOffset = new Vector2(0, 0);
+    [Range(0, 1)]
     [SerializeField] private float _moveInSpeed = 0;
 
     public event Action AnimationStarted = delegate { };
